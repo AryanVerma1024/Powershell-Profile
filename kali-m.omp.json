@@ -1,0 +1,94 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "foreground": "lightBlue",
+          "foreground_templates": [
+            "{{ if .Root }}lightRed{{ end }}"
+          ],
+          "properties": {
+            "display_host": true
+          },
+          "style": "plain",
+          "template": "<{{ if .Root }}lightBlue{{ else }}green{{ end }}>(</>{{ .UserName }}{{ if .Root }}💀{{ else }}㉿{{ end }}{{ .HostName }}<{{ if .Root }}lightBlue{{ else }}green{{ end }}>)</>",
+          "type": "session"
+        },
+        {
+          "foreground": "yellow",
+          "properties": {
+			"display_mode": "files",
+            "fetch_virtual_env": true
+          },
+          "style": "plain",
+          "template": "<{{ if .Root }}lightBlue{{ else }}green{{ end }}>-[</>\ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }}{{ end }} {{ .Full }}{{ end }}<{{ if .Root }}lightBlue{{ else }}green{{ end }}>]</>",
+          "type": "python"
+        },
+		{
+		  "foreground": "lightGreen",
+		  "properties": {
+			  "display_mode": "files"
+		  },
+		  "template": "<{{ if .Root }}lightBlue{{ else }}green{{ end }}>-[</>\udb80\udf99 {{if .Error}}{{ .Error }} {{ else }}{{ .Full }}{{ end }}<{{ if .Root }}lightBlue{{ else }}green{{ end }}>]</>",
+		  "style": "plain",
+		  "type": "node"
+		},
+        {
+          "foreground": "lightWhite",
+          "properties": {
+            "folder_separator_icon": "<#c0c0c0>/</>",
+            "style": "full"
+          },
+          "style": "plain",
+          "template": "<{{ if .Root }}lightBlue{{ else }}green{{ end }}>-[</>{{ .Path }}<{{ if .Root }}lightBlue{{ else }}green{{ end }}>]</>",
+          "type": "path"
+        },
+        {
+          "foreground": "white",
+          "style": "plain",
+          "template": "<{{ if .Root }}lightBlue{{ else }}green{{ end }}>-[</>{{ .HEAD }}<{{ if .Root }}lightBlue{{ else }}green{{ end }}>]</>",
+          "type": "git"
+        },
+        {
+            "foreground": "white",
+            "properties": {
+              "always_enabled": true,
+              "style": "round"
+            },
+            "style": "plain",
+            "template": " {{ .FormattedMs }} ",
+            "type": "executiontime"
+          },
+          {
+            "foreground": "green",
+            "foreground_templates": [
+              "{{ if gt .Code 0 }}red{{ end }}"
+            ],
+            "properties": {
+              "always_enabled": true
+            },
+            "style": "plain",
+            "template": " {{ if gt .Code 0 }}\u2a2f{{else}}\u2713{{ end }} ",
+            "type": "exit"
+          }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "lightBlue",
+          "style": "plain",
+          "template": "{{ if .Root }}<lightRed># </>{{ else }}$ {{ end }}",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "version": 2
+}

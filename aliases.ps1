@@ -1,0 +1,1 @@
+New-Alias -Name py -Value python.exe -Force
