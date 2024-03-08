@@ -73,7 +73,31 @@ function Watch-Command {
         # Sleep for the interval
         Start-Sleep -Seconds $Interval
 
-    } while($EndTime -gt (Get-Date) -or $Endless)
+    } while ($EndTime -gt (Get-Date) -or $Endless)
+}
+
+# Move items to recycle bin
+Add-Type -AssemblyName Microsoft.VisualBasic
+
+function Remove-To-RecycleBin {
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$Path
+    )
+    $item = Get-Item -Path $Path -ErrorAction SilentlyContinue
+    if ($null -eq $item) {
+        Write-Host "Item not found: $Path" -ForegroundColor Red
+        return
+    }
+    else{
+        $fullpath = $item.FullName
+        if (Test-Path -Path $fullpath -PathType Container) {
+            [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory($fullpath, 'OnlyErrorDialogs', 'SendToRecycleBin')
+        }
+        else {
+            [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($fullpath, 'OnlyErrorDialogs', 'SendToRecycleBin')
+        }
+    }
 }
 
 # For Interactive History Search
