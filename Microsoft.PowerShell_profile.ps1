@@ -26,6 +26,7 @@ function Show-History {
 }
 
 # Function to emulate Linux `watch` command
+
 function Watch-Command {
     param(
         [Parameter(Mandatory = $true, Position = 0)]
@@ -49,33 +50,20 @@ function Watch-Command {
         throw "Command should be a single string. Use Arguments parameter for additional arguments."
     }
 
-    $initialPos = $host.UI.RawUI.CursorPosition
-
-    $previousLines = 0
-
     [Console]::TreatControlCAsInput = $true
 
+    Write-Host "`e[?1049h" # Enable alternate screen buffer
+
     do {
-        $Host.UI.RawUI.CursorPosition = $initialPos
-
-        # Clear to the end of the screen
-        Write-Host (" " * ($Host.UI.RawUI.MaxWindowSize.Width - 1 - $initialPos.X))
-
-        # clear previous output
-        Write-Host (" " * $previousLines * ($Host.UI.RawUI.MaxWindowSize.Width - 1))
-
-        $Host.UI.RawUI.CursorPosition = $initialPos
+        Clear-Host
 
         # Run the command
         Invoke-Expression "$Command $Arguments"
 
-        # get count of lines in output
-        $previousLines = ($host.UI.RawUI.CursorPosition.Y - $initialPos.Y)
-
         # Sleep for the interval
         Start-Sleep -Seconds $Interval
 
-        if([Console]::KeyAvailable) {
+        if ([Console]::KeyAvailable) {
             $key = [Console]::ReadKey($true)
             if ($key.Key -eq "C" -and ($key.Modifiers -band [ConsoleModifiers]::Control) -eq [ConsoleModifiers]::Control) {
                 Write-Host "Keybord Interrupt detected. Exiting..."
@@ -85,7 +73,12 @@ function Watch-Command {
 
     } while ($EndTime -gt (Get-Date) -or $Endless)
 
+    Write-Host "`e[?1049l" # Disable alternate screen buffer
+
     [Console]::TreatControlCAsInput = $false
+
+    Write-Host "End of Watch"
+
 }
 
 function Get-Installs {
@@ -100,8 +93,6 @@ function Get-Installs {
 
     Get-Content "$(Split-Path -Parent $PROFILE)\installs.md"
 }
-
-# TODO: Watch command using alternate screen buffer
 
 # For Interactive History Search
 Set-PSReadLineOption -PredictionSource History
