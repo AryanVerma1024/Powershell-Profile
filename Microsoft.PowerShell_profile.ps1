@@ -53,6 +53,8 @@ function Watch-Command {
 
     $previousLines = 0
 
+    [Console]::TreatControlCAsInput = $true
+
     do {
         $Host.UI.RawUI.CursorPosition = $initialPos
 
@@ -73,32 +75,33 @@ function Watch-Command {
         # Sleep for the interval
         Start-Sleep -Seconds $Interval
 
+        if([Console]::KeyAvailable) {
+            $key = [Console]::ReadKey($true)
+            if ($key.Key -eq "C" -and ($key.Modifiers -band [ConsoleModifiers]::Control) -eq [ConsoleModifiers]::Control) {
+                Write-Host "Keybord Interrupt detected. Exiting..."
+                break
+            }
+        }
+
     } while ($EndTime -gt (Get-Date) -or $Endless)
+
+    [Console]::TreatControlCAsInput = $false
 }
 
-# Move items to recycle bin
-Add-Type -AssemblyName Microsoft.VisualBasic
-
-function Remove-To-RecycleBin {
+function Get-Installs {
+    # no parameters
     param(
-        [Parameter(Mandatory = $true, Position = 0)]
-        [string]$Path
+        [Parameter(Mandatory = $false)]
+        $args
     )
-    $item = Get-Item -Path $Path -ErrorAction SilentlyContinue
-    if ($null -eq $item) {
-        Write-Host "Item not found: $Path" -ForegroundColor Red
-        return
+    if ($args) {
+        throw "No parameters are required for this function."
     }
-    else{
-        $fullpath = $item.FullName
-        if (Test-Path -Path $fullpath -PathType Container) {
-            [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory($fullpath, 'OnlyErrorDialogs', 'SendToRecycleBin')
-        }
-        else {
-            [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($fullpath, 'OnlyErrorDialogs', 'SendToRecycleBin')
-        }
-    }
+
+    Get-Content "$(Split-Path -Parent $PROFILE)\installs.md"
 }
+
+# TODO: Watch command using alternate screen buffer
 
 # For Interactive History Search
 Set-PSReadLineOption -PredictionSource History
