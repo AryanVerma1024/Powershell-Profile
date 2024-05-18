@@ -38,7 +38,7 @@
         {
           "foreground": "lightWhite",
           "properties": {
-            "folder_separator_icon": "<#c0c0c0>/</>",
+            "folder_separator_icon": "<#c0c0c0>\\</>",
             "style": "full"
           },
           "style": "plain",
