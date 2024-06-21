@@ -1,0 +1,103 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version = 2
+patch_pwsh_bleed = true
+disable_notice = true
+final_space = true
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'root'
+    style = 'plain'
+    foreground = 'p:root'
+    template = ' '
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    foreground = 'p:text'
+    template = '<p:separator>❬</>{{ .Path }}<p:separator>❭</>'
+
+    [blocks.segments.properties]
+      style = 'full'
+
+  [[blocks.segments]]
+    type = 'python'
+    style = 'plain'
+    foreground = 'p:py'
+    template = '<p:separator>-❬</> {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }}{{ end }} {{ .Full }}{{ end }}<p:separator>❭</>'
+
+    [blocks.segments.properties]
+      display_mode = 'files'
+      fetch_virtual_env = true
+
+  [[blocks.segments]]
+    type = 'node'
+    style = 'plain'
+    foreground = 'p:node'
+    template = '<p:separator>-❬</>󰎙 {{if .Error}}{{ .Error }} {{ else }}{{ .Full }}{{ end }}<p:separator>❭</>'
+
+    [blocks.segments.properties]
+      display_mode = 'files'
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'plain'
+    foreground = 'p:git'
+    template = '<p:separator>-❬</>{{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}<p:separator>❭</>'
+
+    [blocks.segments.properties]
+      fetch_status = true
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'right'
+  overflow = 'hide'
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = 'p:text'
+    template = '<p:separator>❬</>{{ .FormattedMs }}<p:separator>❭</>'
+
+    [blocks.segments.properties]
+      threshold = 1000
+
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    foreground_templates = [
+      '{{ if gt .Code 0 }}p:error{{ end }}',
+      'p:text',
+    ]
+    template = '❱'
+
+[transient_prompt]
+  foreground_templates = [
+    '{{ if gt .Code 0 }}p:error{{ end }}',
+    'p:text',
+  ]
+  template = '❱ '
+
+[secondary_prompt]
+  foreground = 'p:text'
+  template = '❱❱ '
+
+[palette]
+  text      = 'lightBlue'
+  error     = 'lightRed'
+  root      = 'red'
+  separator = 'green'
+  py        = 'yellow'
+  node      = 'lightGreen'
+  git       = 'lightWhite'

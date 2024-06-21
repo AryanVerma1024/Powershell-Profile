@@ -48,4 +48,4 @@ $env:NODE_PATH = "C:\Users\Aryan\AppData\Roaming\npm\node_modules"
 
 # oh-my-posh init
 # original path $env:POSH_THEMES_PATH/kali-m.omp.json
-oh-my-posh init pwsh --config "$Home\Documents\PowerShell\kali-m.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$Home\Documents\PowerShell\omp_config.toml" | Invoke-Expression
