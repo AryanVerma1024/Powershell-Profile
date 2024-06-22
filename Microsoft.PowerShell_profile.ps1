@@ -29,6 +29,8 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle InlineView
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadLineKeyHandler -Key Ctrl+P -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key Ctrl+N -Function HistorySearchForward
 
 # Terminal Icons in dir/ls
 # Import-Module -Name Terminal-Icons
