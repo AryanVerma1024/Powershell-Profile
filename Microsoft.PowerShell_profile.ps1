@@ -25,9 +25,10 @@ if (Test-Path "$Home\Documents\PowerShell\helperFunctions.ps1") {
 }
 
 # For Interactive History Search
-Set-PSReadLineOption -PredictionSource History
-Set-PSReadLineOption -PredictionViewStyle ListView
-Set-PSReadLineOption -EditMode Windows
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -PredictionViewStyle InlineView
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
 # Terminal Icons in dir/ls
 # Import-Module -Name Terminal-Icons
