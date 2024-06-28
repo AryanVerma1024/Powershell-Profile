@@ -4,16 +4,6 @@ if (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
 
-# GitHub Completion
-if (Test-Path "$Home\Documents\PowerShell\githubCompletion.ps1") {
-    . "$Home\Documents\PowerShell\githubCompletion.ps1"
-}
-
-# mpv Completion
-if (Test-Path "$Home\Documents\PowerShell\mpvPowershellCompletion.ps1") {
-    . "$Home\Documents\PowerShell\mpvPowershellCompletion.ps1"
-}
-
 # Aliases
 if (Test-Path "$Home\Documents\PowerShell\aliases.ps1") {
     . "$Home\Documents\PowerShell\aliases.ps1"
@@ -29,8 +19,8 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle InlineView
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-Set-PSReadLineKeyHandler -Key Ctrl+P -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key Ctrl+N -Function HistorySearchForward
+Set-PSReadLineKeyHandler -Key Ctrl+p -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key Ctrl+n -Function HistorySearchForward
 
 # Terminal Icons in dir/ls
 # Import-Module -Name Terminal-Icons
@@ -38,8 +28,8 @@ Set-PSReadLineKeyHandler -Key Ctrl+N -Function HistorySearchForward
 if (-not (Test-IsElevated)) {
     #region conda initialize
     # !! Contents within this block are managed by 'conda init' !!
-    If (Test-Path "C:\Users\Aryan\miniconda3\Scripts\conda.exe") {
-        (& "C:\Users\Aryan\miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Where-Object { $_ } | Invoke-Expression
+    If (Test-Path "$Home\miniconda3\Scripts\conda.exe") {
+        (& "$Home\miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Where-Object { $_ } | Invoke-Expression
     }
     #endregion
 }
@@ -47,7 +37,7 @@ if (-not (Test-IsElevated)) {
 # Do not show conda environment in prompt --managed by oh-my-posh
 $env:VIRTUAL_ENV_DISABLE_PROMPT = 1
 
-$env:NODE_PATH = "C:\Users\Aryan\AppData\Roaming\npm\node_modules"
+$env:NODE_PATH = "$($env:APPDATA)\npm\node_modules"
 
 # oh-my-posh init
 # original path $env:POSH_THEMES_PATH/kali-m.omp.json
