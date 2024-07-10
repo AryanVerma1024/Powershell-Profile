@@ -16,7 +16,6 @@ if (Test-Path "$Home\Documents\PowerShell\helperFunctions.ps1") {
 
 # For Interactive History Search
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
-Set-PSReadLineOption -PredictionViewStyle InlineView
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key Ctrl+p -Function HistorySearchBackward
@@ -40,5 +39,5 @@ $env:VIRTUAL_ENV_DISABLE_PROMPT = 1
 $env:NODE_PATH = "$($env:APPDATA)\npm\node_modules"
 
 # oh-my-posh init
-# original path $env:POSH_THEMES_PATH/kali-m.omp.json
+# original themes path $env:POSH_THEMES_PATH
 oh-my-posh init pwsh --config "$Home\Documents\PowerShell\omp_config.toml" | Invoke-Expression
