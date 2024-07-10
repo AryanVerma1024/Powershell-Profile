@@ -26,23 +26,31 @@ final_space = true
       style = 'full'
 
   [[blocks.segments]]
+    type='os'
+    style='plain'
+    foreground='p:wsl'
+    template='{{ if .WSL }}<p:separator>-❬</>{{ .Icon }} {{ .UserName }}<p:separator>❭</>{{ end }}'
+
+  [[blocks.segments]]
     type = 'python'
     style = 'plain'
     foreground = 'p:py'
-    template = '<p:separator>-❬</> {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }}{{ end }} {{ .Full }}{{ end }}<p:separator>❭</>'
+    template = '<p:separator>-❬</> {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }}{{ end }}{{ end }}<p:separator>❭</>'
 
     [blocks.segments.properties]
-      display_mode = 'files'
+      display_mode = 'context'
       fetch_virtual_env = true
+      display_default = false
 
   [[blocks.segments]]
     type = 'node'
     style = 'plain'
     foreground = 'p:node'
-    template = '<p:separator>-❬</>󰎙 {{if .Error}}{{ .Error }} {{ else }}{{ .Full }}{{ end }}<p:separator>❭</>'
+    template = '<p:separator>-❬</>󰎙 {{if .Error}}{{ .Error }} {{ else }}{{ .Major }}{{ end }}<p:separator>❭</>'
 
     [blocks.segments.properties]
-      display_mode = 'files'
+      display_mode = 'context'
+
 
   [[blocks.segments]]
     type = 'git'
@@ -98,6 +106,7 @@ final_space = true
   error     = 'lightRed'
   root      = 'red'
   separator = 'green'
-  py        = 'yellow'
+  py        = 'lightYellow'
   node      = 'lightGreen'
   git       = 'lightWhite'
+  wsl       = 'lightMagenta'
