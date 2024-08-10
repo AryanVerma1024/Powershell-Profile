@@ -6,6 +6,11 @@ disable_notice = true
 final_space = true
 console_title_template = '{{ .Shell }} in {{ .Folder }}'
 
+[var]
+  sepl = '<p:separator>❬</>'
+  sepld = '<p:separator>-❬</>'
+  sepr = '<p:separator>❭</>'
+
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
@@ -21,7 +26,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     type = 'path'
     style = 'plain'
     foreground = 'p:text'
-    template = '<p:separator>❬</>{{ .Path }}<p:separator>❭</>'
+    template = '{{ .Var.sepl }}{{ .Path }}{{ .Var.sepr }}'
 
     [blocks.segments.properties]
       style = 'full'
@@ -30,13 +35,13 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     type='os'
     style='plain'
     foreground='p:wsl'
-    template='{{ if .WSL }}<p:separator>-❬</>{{ .Icon }} {{ .UserName }}<p:separator>❭</>{{ end }}'
+    template='{{ if .WSL }}{{ .Var.sepld }}{{ .Icon }} {{ .UserName }}{{ .Var.sepr }}{{ end }}'
 
   [[blocks.segments]]
     type = 'python'
     style = 'plain'
     foreground = 'p:py'
-    template = '<p:separator>-❬</> {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }}{{ end }}{{ end }}<p:separator>❭</>'
+    template = '{{ .Var.sepld }} {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }}{{ end }}{{ end }}{{ .Var.sepr }}'
 
     [blocks.segments.properties]
       display_mode = 'context'
@@ -47,7 +52,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     type = 'node'
     style = 'plain'
     foreground = 'p:node'
-    template = '<p:separator>-❬</>󰎙 {{if .Error}}{{ .Error }} {{ else }}{{ .Major }}{{ end }}<p:separator>❭</>'
+    template = '{{ .Var.sepld }}󰎙 {{if .Error}}{{ .Error }} {{ else }}{{ .Major }}{{ end }}{{ .Var.sepr }}'
 
     [blocks.segments.properties]
       display_mode = 'context'
@@ -57,7 +62,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     type = 'git'
     style = 'plain'
     foreground = 'p:git'
-    template = '<p:separator>-❬</>{{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}<p:separator>❭</>'
+    template = '{{ .Var.sepld }}{{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}{{ .Var.sepr }}'
 
     [blocks.segments.properties]
       fetch_status = true
@@ -71,7 +76,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     type = 'executiontime'
     style = 'plain'
     foreground = 'p:text'
-    template = '<p:separator>❬</>{{ .FormattedMs }}<p:separator>❭</>'
+    template = '{{ .Var.sepl }}{{ .FormattedMs }}{{ .Var.sepr }}'
 
     [blocks.segments.properties]
       threshold = 1000
