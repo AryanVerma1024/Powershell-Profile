@@ -16,8 +16,7 @@ if (Test-Path "$Home\Documents\PowerShell\helperFunctions.ps1") {
 
 # For Interactive History Search
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
-Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadLineKeyHandler -Key Ctrl+f -Function AcceptSuggestion
 Set-PSReadLineKeyHandler -Key Ctrl+p -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key Ctrl+n -Function HistorySearchForward
 
