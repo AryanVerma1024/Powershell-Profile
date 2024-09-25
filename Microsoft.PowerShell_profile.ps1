@@ -20,9 +20,6 @@ Set-PSReadLineKeyHandler -Key Ctrl+f -Function AcceptSuggestion
 Set-PSReadLineKeyHandler -Key Ctrl+p -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key Ctrl+n -Function HistorySearchForward
 
-# Terminal Icons in dir/ls
-# Import-Module -Name Terminal-Icons
-
 if (-not (Test-IsElevated)) {
     #region conda initialize
     # !! Contents within this block are managed by 'conda init' !!
